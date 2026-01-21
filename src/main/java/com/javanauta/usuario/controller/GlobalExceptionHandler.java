@@ -34,4 +34,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleIlegalArgumentException(IlegalArgumentException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler (ResourceNotFoundException.class)
+    public ResponseEntity<String> handleResourceNotFoundException (ResourceNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler (ConflictException.class)
+    public ResponseEntity<String> handleConflictException (ConflictException ex ){
+        return new ResponseEntity<>(ex.getMessage() , HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler (UnauthorizedException.class)
+    public ResponseEntity<String> handleUnauthorizedException (UnauthorizedException ex ) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 }
