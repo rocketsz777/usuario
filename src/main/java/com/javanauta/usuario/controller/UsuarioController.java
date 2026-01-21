@@ -14,8 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
 @RequestMapping("/usuario")
+@RestController
 @RequiredArgsConstructor
 public class UsuarioController {
 
@@ -37,12 +37,13 @@ public class UsuarioController {
                         usuarioDTO.getSenha()
                 )
         );
-        String token = jwtUtil.generateToken(authentication.getName());
-        return ResponseEntity.ok("Bearer " + token);
+        return ResponseEntity.ok("Bearer " + jwtUtil.generateToken(authentication.getName()));
     }
 
     @GetMapping
-    public ResponseEntity<UsuarioDTO> buscaUsuarioPorEmail(@RequestParam("email") String email) {
+    public ResponseEntity<UsuarioDTO> buscaUsuarioPorEmail(
+            @RequestParam("email") String email
+    ) {
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
     }
 
@@ -53,7 +54,7 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(
+    public ResponseEntity<UsuarioDTO> atualizaDadoUsuario(
             @RequestBody UsuarioDTO dto,
             @RequestHeader("Authorization") String token
     ) {
@@ -77,7 +78,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/endereco/{cep}")
-    public ResponseEntity<ViaCepDTO> buscarDadosCep(@PathVariable String cep) {
+    public ResponseEntity<ViaCepDTO> buscarDadosCep(
+            @PathVariable String cep
+    ) {
         return ResponseEntity.ok(viaCepService.buscarDadosEndereco(cep));
     }
 }
