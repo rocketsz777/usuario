@@ -10,8 +10,6 @@ import com.javanauta.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/usuario")
@@ -31,13 +29,8 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UsuarioDTO usuarioDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        usuarioDTO.getEmail(),
-                        usuarioDTO.getSenha()
-                )
-        );
-        return ResponseEntity.ok("Bearer " + jwtUtil.generateToken(authentication.getName()));
+        return ResponseEntity.ok(usuarioService.autenticarUsuario(usuarioDTO));
+
     }
 
     @GetMapping
